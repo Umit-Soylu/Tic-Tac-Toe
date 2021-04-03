@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.bilgeadam.xox.R;
 
-public class GameBoard extends Fragment {
+public class GameBoard extends Fragment{
 
     @Nullable
     @Override
@@ -18,4 +18,5 @@ public class GameBoard extends Fragment {
 
         return gameBoardView;
     }
+
 }

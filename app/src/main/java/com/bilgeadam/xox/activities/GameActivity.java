@@ -1,6 +1,8 @@
 package com.bilgeadam.xox.activities;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -12,7 +14,7 @@ import com.bilgeadam.xox.fragments.GameInfo;
 import com.bilgeadam.xox.game.Logic;
 
 public class GameActivity extends FragmentActivity {
-    public static final String GAME_LOGIC_BUNDLE = "logic";
+    public static final String GAME_KEY = "logic";
 
     private Logic gameLogic;
     private FragmentManager fragmentManager;
@@ -25,7 +27,7 @@ public class GameActivity extends FragmentActivity {
 
         // Create bundle to deliver object to fragments
         Bundle bundle = new Bundle();
-        bundle.putSerializable(GAME_LOGIC_BUNDLE, gameLogic);
+        bundle.putSerializable(GAME_KEY, gameLogic);
 
         // Declare Fragments
         Fragment gameInfo = new GameInfo();
@@ -41,5 +43,13 @@ public class GameActivity extends FragmentActivity {
         transaction.commit();
 
         setContentView(R.layout.activity_game);
+    }
+
+    public void clickImage(View view){
+        int index = Integer.parseInt((String) view.getTag());
+
+        Log.i(this.getClass().getSimpleName(), String.format("Image tag: %d", index));
+
+        gameLogic.processTurn(index / 10 - 1, index % 10 - 1);
     }
 }
