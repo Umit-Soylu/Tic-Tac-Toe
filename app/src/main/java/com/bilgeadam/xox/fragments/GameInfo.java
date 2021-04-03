@@ -24,10 +24,10 @@ public class GameInfo extends Fragment {
         gameLogic = (Logic) getArguments().getSerializable(GameActivity.GAME_KEY);
 
         currentPlayer = gameInfoView.findViewById(R.id.current_player);
-        currentPlayer.setText(String.format(getString(R.string.current_player), gameLogic.getCurrentPlayerInfo()));
+        currentPlayer.setText(String.format(getString(R.string.current_player), gameLogic.getCurrentPlayer().toString()));
 
         currentTurn = gameInfoView.findViewById(R.id.current_turn);
-        currentTurn.setText(String.format(getString(R.string.current_turn), gameLogic.getCurrentTurn()));
+        currentTurn.setText(String.format(getString(R.string.current_turn), gameLogic.getCurrentPlayer().getCurrentTurn()));
 
         return gameInfoView;
     }

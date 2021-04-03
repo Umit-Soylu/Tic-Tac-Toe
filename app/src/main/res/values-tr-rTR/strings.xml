@@ -5,4 +5,6 @@
     <string name="welcome_button">Oyuna baslamak icin buraya basiniz</string>
     <string name="current_player">Su an ki oyuncu %s</string>
     <string name="current_turn">Sira %d</string>
+    <string name="game_draw">Oyun berabere kaldi!!!</string>
+    <string name="game_finish">%s oyunu kazandi</string>
 </resources>

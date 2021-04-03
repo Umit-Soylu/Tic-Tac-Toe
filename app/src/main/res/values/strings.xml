@@ -4,4 +4,6 @@
     <string name="welcome_button">Welcome to XOX Game</string>
     <string name="current_player">Current Player is %s</string>
     <string name="current_turn">Current Turn is %d</string>
+    <string name="game_draw">Game ends in draw</string>
+    <string name="game_finish">Winning player is %s</string>
 </resources>

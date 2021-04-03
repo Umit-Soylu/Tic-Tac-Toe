@@ -3,6 +3,7 @@ package com.bilgeadam.xox.animations;
 import android.graphics.Rect;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -51,5 +52,22 @@ public class Animations {
                 myButton.animate().translationYBy(bounds.bottom - buttonLocation[1]).alpha(ALPHA).setDuration(durationValue);
                 break;
         }
+    }
+
+    /**
+     * Puts given shape into the image
+     * @param image Image to be filled
+     * @param shape Shape of the given image
+     * @param duration Duration of the animation
+     */
+    public void dropDownImage(@NotNull ImageView image, int shape, Optional<Long> duration){
+        long durationValue = duration.orElse(DURATION);
+
+        // Setup initial condition
+        image.setImageResource(shape);
+        image.setTranslationY(-image.getHeight());
+        image.setAlpha(ALPHA);
+
+        image.animate().translationYBy(image.getHeight()).alpha(1.0F).setDuration(durationValue);
     }
 }

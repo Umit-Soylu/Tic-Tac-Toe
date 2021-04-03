@@ -8,27 +8,36 @@ public class Logic implements Serializable{
 
     private final int[][] board; //0->Empty; 1->X; 2->O
     private Players currentPlayer;
-    private int currentTurn;
 
     public Logic() {
         this.board = new int[3][3];
-        currentTurn = 1;
         currentPlayer = Players.generateRandomPlayer();
     }
 
-    public void processTurn(int x, int y){
+    public boolean processTurn(int x, int y){
         Log.i(this.getClass().getSimpleName(), String.format("Process turn for x:%d y:%d", x, y));
+
         board[x][y] = currentPlayer.getValue();
 
-        currentTurn++;
+        // TODO - Check game condition
+        // Check if someone win
+        if (false){
+            return false;
+        }
+
+        // Check for draw
+        if (Players.X.getCurrentTurn() + Players.O.getCurrentTurn() > board.length * board[0].length)
+            return false;
+
+
+        // Game continues
+        currentPlayer.incrementTurn();
         currentPlayer = currentPlayer.getNextPlayer();
+        return true;
     }
 
-    public String getCurrentPlayerInfo(){
-        return currentPlayer.toString();
+    public Players getCurrentPlayer(){
+        return currentPlayer;
     }
 
-    public Integer getCurrentTurn(){
-        return currentTurn;
-    }
 }
