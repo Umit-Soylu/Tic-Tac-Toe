@@ -1,6 +1,9 @@
 package com.bilgeadam.xox.game;
 
+import android.provider.ContactsContract;
 import com.bilgeadam.xox.R;
+
+import java.util.Date;
 
 public enum Players {
     X(1, R.drawable.x),
@@ -8,11 +11,14 @@ public enum Players {
 
     private final int value, drawable;
     private int currentTurn;
+    private Float score;
+    private long totalTurnTime;
+    private Date turnStartTime;
 
     Players(int value, int drawable) {
         this.value = value;
         this.drawable = drawable;
-        currentTurn = 1;
+        resetParameters();
     }
 
     protected int getValue() {
@@ -31,8 +37,34 @@ public enum Players {
         this.currentTurn++;
     }
 
+    protected void resetParameters(){
+        currentTurn = 1;
+        score = 0F;
+        totalTurnTime = 0L;
+    }
+
     public int getCurrentTurn() {
         return currentTurn;
+    }
+
+    protected void setScore(Float score) {
+        this.score = score;
+    }
+
+    public Float getScore() {
+        return score;
+    }
+
+    protected void startTurnTime(){
+        turnStartTime = new Date();
+    }
+
+    protected void endTurnTime(){
+        totalTurnTime += new Date().getTime() - turnStartTime.getTime();
+    }
+
+    protected long getTotalTurnTime() {
+        return totalTurnTime;
     }
 
     /**

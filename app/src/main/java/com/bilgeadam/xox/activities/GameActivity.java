@@ -1,6 +1,9 @@
 package com.bilgeadam.xox.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,6 +17,7 @@ import com.bilgeadam.xox.R;
 import com.bilgeadam.xox.animations.Animations;
 import com.bilgeadam.xox.fragments.GameBoard;
 import com.bilgeadam.xox.fragments.GameInfo;
+import com.bilgeadam.xox.game.GameState;
 import com.bilgeadam.xox.game.Logic;
 
 import java.util.Optional;
@@ -57,18 +61,28 @@ public class GameActivity extends FragmentActivity {
 
         int index = Integer.parseInt((String) view.getTag());
 
-        Log.i(this.getClass().getSimpleName(), String.format("Image tag: %d", index));
-
         animations.dropDownImage((ImageView) view, gameLogic.getCurrentPlayer().getDrawable(), Optional.of(500L));
 
-        if(gameLogic.processTurn(index / 10 - 1, index % 10 - 1)){
-            // Game continues
-            refreshGameInfoFragment();
-        } else{
-            Toast.makeText(this, getString(R.string.game_draw), Toast.LENGTH_LONG).show();
-            // Game draw or someone won
-            // Go to score activity
+        Log.i(this.getClass().getSimpleName(), String.format("Image tag: %d", index));
+
+        switch (gameLogic.processTurn(index / 10 - 1, index % 10 - 1)){
+            case CONTINUE:
+                refreshGameInfoFragment();
+                break;
+            case DRAW:
+                processEndGame(getString(R.string.game_draw));
+                break;
+            case WIN:
+                processEndGame(String.format(getString(R.string.game_finish), gameLogic.getCurrentPlayer(), gameLogic.getCurrentPlayer().getScore()));
+                break;
         }
+    }
+
+    private void processEndGame(String message){
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(() -> startActivity(new Intent(this, ScoreActivity.class)), 1000L);
     }
 
     private void refreshGameInfoFragment(){
