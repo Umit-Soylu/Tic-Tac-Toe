@@ -2,7 +2,9 @@ package com.bilgeadam.xox.game;
 
 import android.util.Log;
 
-class ScoreCalculator {
+import java.io.Serializable;
+
+class ScoreCalculator implements Serializable {
     private static final int MAX_TURN_POINT = 5, SHORTEST_TIME_POINT = 5;
     private static final long SHORTEST_GAME_LENGTH = 3000L;
 

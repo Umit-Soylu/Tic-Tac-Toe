@@ -7,4 +7,6 @@
     <string name="current_turn">Sira %d</string>
     <string name="game_draw">Oyun berabere kaldi!!!</string>
     <string name="game_finish">%s oyunu kazandi, puani %.4f</string>
+    <string name="restart_button">Yeni Oyun</string>
+    <string name="end_button">Sonlandir</string>
 </resources>
