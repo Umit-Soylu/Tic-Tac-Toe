@@ -22,7 +22,7 @@ import com.bilgeadam.xox.game.Logic;
 import java.util.Optional;
 
 public class GameActivity extends FragmentActivity {
-    public static final String GAME_KEY = "logic", SCORE_KEY = "score";
+    public static final String GAME_KEY = "logic", SCORE_KEY = "score", PLAYER_KEY = "player";
 
     private Logic gameLogic;
     private FragmentManager fragmentManager;
@@ -82,7 +82,10 @@ public class GameActivity extends FragmentActivity {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(() -> {
             Intent intent = new Intent(this, ScoreActivity.class);
-            if (!isGameDraw) intent.putExtra(SCORE_KEY, gameLogic.getCurrentPlayer().getScore());
+            if (!isGameDraw){
+                intent.putExtra(SCORE_KEY, gameLogic.getCurrentPlayer().getScore());
+                intent.putExtra(PLAYER_KEY, gameLogic.getCurrentPlayer().toString());
+            }
             startActivity(intent);
         }, 1000L);
     }
