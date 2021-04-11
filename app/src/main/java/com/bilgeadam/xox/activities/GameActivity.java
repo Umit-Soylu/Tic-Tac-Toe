@@ -82,9 +82,7 @@ public class GameActivity extends FragmentActivity {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(() -> {
             Intent intent = new Intent(this, ScoreActivity.class);
-
             if (!isGameDraw) intent.putExtra(SCORE_KEY, gameLogic.getCurrentPlayer().getScore());
-
             startActivity(intent);
         }, 1000L);
     }

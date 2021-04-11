@@ -27,6 +27,7 @@ public class ScoreActivity extends FragmentActivity {
     }
 
 
+
     public void finishGame(View view){
         finishAffinity();
     }
