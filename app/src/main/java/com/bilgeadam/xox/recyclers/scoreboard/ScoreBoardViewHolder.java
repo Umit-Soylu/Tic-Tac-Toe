@@ -10,22 +10,22 @@ import org.jetbrains.annotations.NotNull;
 class ScoreBoardViewHolder extends RecyclerView.ViewHolder {
     private final TextView id, name, score;
 
-    public ScoreBoardViewHolder(@NonNull @NotNull View itemView) {
+    ScoreBoardViewHolder(@NonNull @NotNull View itemView) {
         super(itemView);
         id = itemView.findViewById(R.id.id);
         name = itemView.findViewById(R.id.player_name);
         score = itemView.findViewById(R.id.score);
     }
 
-    protected TextView getId() {
+    TextView getId() {
         return id;
     }
 
-    protected TextView getName() {
+    TextView getName() {
         return name;
     }
 
-    protected TextView getScore() {
+    TextView getScore() {
         return score;
     }
 }

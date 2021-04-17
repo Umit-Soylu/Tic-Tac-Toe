@@ -16,11 +16,8 @@ import java.util.List;
 public class ScoreBoardAdapter extends RecyclerView.Adapter<ScoreBoardViewHolder> {
     private final List<Score> scoreList;
 
-    public ScoreBoardAdapter() {
-        scoreList = new ArrayList<>();
-        scoreList.add(new Score(1, "Test", 5F));
-        scoreList.add(new Score(2, "Test", 5F));
-//        this.scoreList = scoreList;
+    public ScoreBoardAdapter(List<Score> scores) {
+        this.scoreList = scores;
     }
 
     @NonNull
@@ -36,11 +33,10 @@ public class ScoreBoardAdapter extends RecyclerView.Adapter<ScoreBoardViewHolder
     public void onBindViewHolder(@NonNull @NotNull ScoreBoardViewHolder holder, int position) {
         Score currentScore = scoreList.get(position);
 
-        holder.getId().setText(currentScore.getId());
+        holder.getId().setText(String.valueOf(position + 1));
         holder.getName().setText(currentScore.getName());
         holder.getScore().setText(String.valueOf(currentScore.getScore()));
     }
-
 
     @Override
     public int getItemCount() {

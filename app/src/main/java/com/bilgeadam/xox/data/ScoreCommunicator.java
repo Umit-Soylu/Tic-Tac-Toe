@@ -13,7 +13,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import java.util.stream.IntStream;
 
 /**
@@ -48,6 +47,7 @@ public class ScoreCommunicator {
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, URI,
                 null,
                 listener -> {
+                    Log.v(this.getClass().getSimpleName(), "Scores received.");
                     List<Score> scores = new ArrayList<>();
                     IntStream.range(0, listener.length()).
                         forEach(i-> {
@@ -61,7 +61,8 @@ public class ScoreCommunicator {
                                 e.printStackTrace();
                             }
                         });
-                    activity.setScoreList(scores);
+
+                    activity.setScoreFragment(scores);
                 },
                 error -> Log.e(this.getClass().getSimpleName(), "Cannot read scores from database", error));
 
