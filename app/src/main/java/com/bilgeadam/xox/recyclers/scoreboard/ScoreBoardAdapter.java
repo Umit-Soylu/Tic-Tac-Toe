@@ -3,14 +3,12 @@ package com.bilgeadam.xox.recyclers.scoreboard;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bilgeadam.xox.R;
 import com.bilgeadam.xox.data.Score;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ScoreBoardAdapter extends RecyclerView.Adapter<ScoreBoardViewHolder> {

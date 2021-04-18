@@ -2,7 +2,6 @@ package com.bilgeadam.xox.activities;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bilgeadam.xox.R;
 import com.bilgeadam.xox.animations.Animations;
 import com.bilgeadam.xox.fragments.Contacts;
-import com.bilgeadam.xox.fragments.ScoreResult;
 import com.bilgeadam.xox.recyclers.contacts.ContactAdapter;
 import org.jetbrains.annotations.NotNull;
 

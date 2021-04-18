@@ -14,9 +14,7 @@ public class GameBoard extends Fragment{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View gameBoardView = inflater.inflate(R.layout.fragment_gameboard, container, false);
-
-        return gameBoardView;
+        return inflater.inflate(R.layout.fragment_gameboard, container, false);
     }
 
 }
