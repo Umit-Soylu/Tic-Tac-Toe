@@ -32,7 +32,11 @@ public class GameActivity extends FragmentActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        gameLogic = new Logic();
+        // Get both players name
+        final String XName = getIntent().getStringExtra(WelcomeActivity.X_PLAYER_KEY);
+        final String OName = getIntent().getStringExtra(WelcomeActivity.O_PLAYER_KEY);
+
+        gameLogic = new Logic(XName, OName);
         animations = new Animations();
 
         // Create bundle to deliver object to fragments
@@ -84,7 +88,7 @@ public class GameActivity extends FragmentActivity {
             Intent intent = new Intent(this, ScoreActivity.class);
             if (!isGameDraw){
                 intent.putExtra(SCORE_KEY, gameLogic.getCurrentPlayer().getScore());
-                intent.putExtra(PLAYER_KEY, gameLogic.getCurrentPlayer().toString());
+                intent.putExtra(PLAYER_KEY, gameLogic.getCurrentPlayer().getName());
             }
             startActivity(intent);
         }, 1000L);

@@ -1,6 +1,8 @@
 package com.bilgeadam.xox.game;
 
+import androidx.annotation.NonNull;
 import com.bilgeadam.xox.R;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 
@@ -9,6 +11,7 @@ public enum Players {
     O(2, R.drawable.o);
 
     private final int value, drawable;
+    private String name;
 
     private int currentTurn;
     private Float score;
@@ -17,7 +20,7 @@ public enum Players {
     Players(int value, int drawable) {
         this.value = value;
         this.drawable = drawable;
-        resetParameters();
+        resetParameters(null);
     }
 
     protected int getValue() {
@@ -36,10 +39,11 @@ public enum Players {
         this.currentTurn++;
     }
 
-    protected void resetParameters(){
+    protected void resetParameters(String name){
         currentTurn = 1;
         score = 0F;
         totalTurnTime = 0L;
+        this.name = name;
     }
 
     public int getCurrentTurn() {
@@ -66,6 +70,10 @@ public enum Players {
         return totalTurnTime;
     }
 
+    public String getName() {
+        return name == null ? name() : name;
+    }
+
     /**
      *
      * @return random player
@@ -74,5 +82,12 @@ public enum Players {
         Players[] players = Players.values();
 
         return players[(int) Math.round(Math.random() * (players.length - 1))];
+    }
+
+    @NonNull
+    @NotNull
+    @Override
+    public String toString() {
+        return name == null ? name() : String.format("%s (%s)", name(), this.name);
     }
 }

@@ -10,28 +10,27 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bilgeadam.xox.R;
-import com.bilgeadam.xox.data.Score;
-import com.bilgeadam.xox.recyclers.scoreboard.ScoreBoardAdapter;
+import com.bilgeadam.xox.recyclers.contacts.ContactAdapter;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class ScoreBoard extends Fragment {
-    private final List<Score> scoreList;
+public class Contacts extends Fragment {
+    private final List<String> contactsList;
 
-    public ScoreBoard(List<Score> scoreList){
-        this.scoreList = scoreList;
+    public Contacts(List<String> contactsList) {
+        this.contactsList = contactsList;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View scoreboardView = inflater.inflate(R.layout.fragment_scoreboard, container, false);
+        View contactsView = inflater.inflate(R.layout.fragment_contacts, container, false);
 
-        RecyclerView scores = scoreboardView.findViewById(R.id.scoreboard_recycler);
-        scores.setLayoutManager(new LinearLayoutManager(scoreboardView.getContext()));
-        scores.setAdapter(new ScoreBoardAdapter(scoreList));
+        RecyclerView contacts = contactsView.findViewById(R.id.contacts_recycler);
+        contacts.setLayoutManager(new LinearLayoutManager(contactsView.getContext()));
+        contacts.setAdapter(new ContactAdapter(contactsList));
 
-        return scoreboardView;
+        return contactsView;
     }
 }

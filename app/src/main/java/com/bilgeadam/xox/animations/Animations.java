@@ -19,7 +19,7 @@ public class Animations {
      */
     public void rotateText(@NotNull View myText, Optional<Long> duration){
         long durationValue = duration.orElse(DURATION);
-        myText.animate().rotationXBy(360F * durationValue / 100).alpha(ALPHA).setDuration(durationValue);
+        myText.animate().rotationXBy(360F * durationValue / 100).alpha(0.0F).setDuration(durationValue);
     }
 
     /**

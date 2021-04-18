@@ -11,13 +11,13 @@ public class Logic implements Serializable{
 
     private Players currentPlayer;
 
-    public Logic() {
+    public Logic(String XName, String OName) {
         this.board = new int[3][3];
         currentPlayer = Players.generateRandomPlayer();
         currentPlayer.startTurnTime();
         scoreGenerator = new ScoreCalculator(board.length);
-        Players.X.resetParameters();
-        Players.O.resetParameters();
+        Players.X.resetParameters(XName);
+        Players.O.resetParameters(OName);
     }
 
     /**

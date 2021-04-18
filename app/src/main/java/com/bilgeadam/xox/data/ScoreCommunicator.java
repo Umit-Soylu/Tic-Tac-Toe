@@ -35,22 +35,28 @@ public class ScoreCommunicator {
         requestQueue = Volley.newRequestQueue(context);
     }
 
-    public void save(String name, Float score){
+    public void processScoreAndGetResults(String name, float score, ScoreActivity activity){
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, URI,
                 new Score(name, score).toJson(),
-                listener -> Log.v(this.getClass().getSimpleName(), String.format("Player '%s' with score '%f' put to database", name, score)),
-                error -> Log.e(this.getClass().getSimpleName(), String.format("Cannot put %s with score %f to database", name, score), error));
+                listener -> {
+                    getAllScores(activity);
+                    Log.v(this.getClass().getSimpleName(), String.format("Player '%s' with score '%f' put to database", name, score));
+                },
+                error -> {
+                    getAllScores(activity);
+                    Log.e(this.getClass().getSimpleName(), String.format("Cannot put %s with score %f to database", name, score), error);
+                });
         requestQueue.add(request);
     }
 
-    public void getAllScores(ScoreActivity activity){
+    private void getAllScores(ScoreActivity activity){
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, URI,
                 null,
                 listener -> {
                     Log.v(this.getClass().getSimpleName(), "Scores received.");
                     List<Score> scores = new ArrayList<>();
                     IntStream.range(0, listener.length()).
-                        forEach(i-> {
+                        forEach(i -> {
                             try {
                                 JSONObject object = listener.getJSONObject(i);
                                 scores.add(
@@ -61,11 +67,12 @@ public class ScoreCommunicator {
                                 e.printStackTrace();
                             }
                         });
-
                     activity.setScoreFragment(scores);
                 },
-                error -> Log.e(this.getClass().getSimpleName(), "Cannot read scores from database", error));
-
+                error -> {
+                    Log.e(this.getClass().getSimpleName(), "Cannot read scores from database.", error);
+                    activity.setEmptyScoreFragment();
+                });
         requestQueue.add(request);
     }
 }

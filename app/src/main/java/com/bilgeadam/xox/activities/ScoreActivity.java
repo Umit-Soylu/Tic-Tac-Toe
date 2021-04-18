@@ -26,10 +26,13 @@ import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 public class ScoreActivity extends FragmentActivity {
     private String playerName;
     private Float score;
+    private Boolean isFragmentCalled;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        isFragmentCalled = false;
 
         // Get values from Game activity
         score = getIntent().getFloatExtra(GameActivity.SCORE_KEY, -1000F);
@@ -41,7 +44,7 @@ public class ScoreActivity extends FragmentActivity {
         if (score == -1000F || playerName == null){
 //            findViewById(R.id.score_board).setVisibility(View.GONE);
             generateDrawCase();
-            Log.v(this.getClass().getSimpleName(), "Scoreboard is removed because there is no score to show");
+            Log.v(this.getClass().getSimpleName(), "Game ended in a draw.");
         } else {
             // Check for Internet permission
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PERMISSION_GRANTED)
@@ -56,21 +59,15 @@ public class ScoreActivity extends FragmentActivity {
         if (requestCode == PermissionRequestConfig.INTERNET.ordinal()) {
             if (grantResults[0] == PERMISSION_GRANTED)
                 processScores();
-            else {
-                // Someone won the game but there is no Internet access granted
-                List<Score> score = new ArrayList();
-                score.add(new Score(1, playerName, this.score));
-
-                setScoreFragment(score);
-            }
+            else
+               setEmptyScoreFragment();
         } else
             Log.d(this.getClass().getSimpleName(), String.format("Unknown onRequestPermissionsResult for %d", requestCode));
     }
 
     private void processScores(){
         ScoreCommunicator scoreCommunicator = ScoreCommunicator.getInstance(getApplicationContext());
-        scoreCommunicator.save(playerName, score);
-        scoreCommunicator.getAllScores(this);
+        scoreCommunicator.processScoreAndGetResults(playerName, score,this);
     }
 
     private void generateDrawCase(){
@@ -91,12 +88,30 @@ public class ScoreActivity extends FragmentActivity {
         startActivity(intent);
     }
 
-    public void setScoreFragment(List<Score> scoreList) {
-        scoreList.forEach(e -> Log.v(this.getClass().getSimpleName(), String.format("Score id:%d, name:%s, score:%f", e.getId(), e.getName(), e.getScore())));
+    /**
+     * Generates score fragment only with current player name & score.
+     */
+    public void setEmptyScoreFragment(){
+        List<Score> score = new ArrayList<>();
+        score.add(new Score(1, playerName, this.score));
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.score_board, new ScoreBoard(scoreList));
-        transaction.commit();
+        setScoreFragment(score);
+    }
+
+    /**
+     * Generates score fragment with values.
+     * @param scoreList Score list acquired from database
+     */
+    public void setScoreFragment(List<Score> scoreList) {
+        if(!isFragmentCalled) {
+            scoreList.forEach(e -> Log.v(this.getClass().getSimpleName(), String.format("Score id:%d, name:%s, score:%f", e.getId(), e.getName(), e.getScore())));
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.add(R.id.score_board, new ScoreBoard(scoreList));
+            transaction.commit();
+
+            isFragmentCalled = true;
+        }
     }
 }
